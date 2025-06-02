@@ -66,12 +66,12 @@
       const metadata = {
         name,
         email,
-        callerId: name
+        callerId: email
       };
 
-      const botId = "abe1bdf5-47ee-4606-b067-c8926affd14d"; // Replace with your actual Vapi bot ID
+      const botId = "abe1bdf5-47ee-4606-b067-c8926affd14d";
       const encodedMeta = encodeURIComponent(JSON.stringify(metadata));
-      const url = `https://app.vapi.ai/talk?botId=${botId}&metadata=${encodedMeta}`;
+      const url = `https://vapi.ai?demo=true&shareKey=ce828720-740a-44f3-b93a-420dbd3bffb2&assistantId=abe1bdf5-47ee-4606-b067-c8926affd14d&metadata=${encodedMeta}`;
 
       window.location.href = url;
     }
