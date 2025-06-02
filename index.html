@@ -71,8 +71,8 @@
 
       const botId = "abe1bdf5-47ee-4606-b067-c8926affd14d";
       const encodedMeta = encodeURIComponent(JSON.stringify(metadata));
-      const url = `https://app.vapi.ai/talk?botId=${botId}&metadata=${encodedMeta}`;
-
+      const url = `https://vapi.ai?demo=false&assistantId=${botId}&metadata=${encodedMeta}`;
+      
       window.location.href = url;
     }
   </script>
