@@ -65,10 +65,11 @@
 
       const metadata = {
         name,
-        email
+        email,
+        callerId: name
       };
 
-      const botId = "your-vapi-bot-id"; // Replace with your actual Vapi bot ID
+      const botId = "abe1bdf5-47ee-4606-b067-c8926affd14d"; // Replace with your actual Vapi bot ID
       const encodedMeta = encodeURIComponent(JSON.stringify(metadata));
       const url = `https://app.vapi.ai/talk?botId=${botId}&metadata=${encodedMeta}`;
 
