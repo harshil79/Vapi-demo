@@ -69,10 +69,25 @@
         callerId: email
       };
 
+      // Send data to n8n webhook
+      fetch("https://fly-jobs-1.fly.dev/webhook-test/html-user-input", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(metadata)
+      })
+      .then(response => {
+        if (!response.ok) {
+          console.error("Failed to send data to n8n");
+        }
+      })
+      .catch(error => console.error("Error sending to n8n:", error));
+
+      // Proceed to Vapi after webhook
       const botId = "abe1bdf5-47ee-4606-b067-c8926affd14d";
       const encodedMeta = encodeURIComponent(JSON.stringify(metadata));
-      const url = `https://vapi.ai?demo=false&assistantId=${botId}&metadata=${encodedMeta}`;
-      
+      const url = `https://vapi.ai?demo=true&assistantId=${botId}&metadata=${encodedMeta}`;
       window.location.href = url;
     }
   </script>
