@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Talk to Meera</title>
   <style>
     body {
@@ -49,19 +49,18 @@
 <body>
   <div class="container">
     <h2>Talk to Meera</h2>
-    <input type="text" id="name" placeholder="Your Name" required />
-    <input type="email" id="email" placeholder="Your Email" required />
-    <button onclick="startCall()">🎙 Start Talk</button>
+    <form id="meera-form" action="https://fly-jobs-1.fly.dev/webhook/html-user-input" method="POST">
+      <input type="text" name="name" id="name" placeholder="Your Name" required />
+      <input type="email" name="email" id="email" placeholder="Your Email" required />
+      <button type="submit">🎙 Start Talk</button>
+    </form>
   </div>
   <script>
-    function startCall() {
+    document.getElementById("meera-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
-
-      if (!name || !email) {
-        alert("Please enter both name and email.");
-        return;
-      }
 
       const metadata = {
         name,
@@ -69,27 +68,23 @@
         callerId: email
       };
 
-      // Send data to n8n webhook
-      fetch("https://fly-jobs-1.fly.dev/webhook-test/html-user-input", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(metadata)
-      })
-      .then(response => {
+      const form = event.target;
+      const formData = new FormData(form);
+
+      fetch(form.action, {
+        method: form.method,
+        body: formData
+      }).then(response => {
         if (!response.ok) {
           console.error("Failed to send data to n8n");
+        } else {
+          const botId = "abe1bdf5-47ee-4606-b067-c8926affd14d";
+          const encodedMeta = encodeURIComponent(JSON.stringify(metadata));
+          const url = `https://vapi.ai?demo=true&assistantId=${botId}&metadata=${encodedMeta}`;
+          window.location.href = url;
         }
-      })
-      .catch(error => console.error("Error sending to n8n:", error));
-
-      // Proceed to Vapi after webhook
-      const botId = "abe1bdf5-47ee-4606-b067-c8926affd14d";
-      const encodedMeta = encodeURIComponent(JSON.stringify(metadata));
-      const url = `https://vapi.ai?demo=true&assistantId=${botId}&metadata=${encodedMeta}`;
-      window.location.href = url;
-    }
+      }).catch(error => console.error("Error sending to n8n:", error));
+    });
   </script>
 </body>
 </html>
