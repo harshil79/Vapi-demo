@@ -79,8 +79,8 @@
           console.error("Failed to send data to n8n");
         } else {
           const botId = "abe1bdf5-47ee-4606-b067-c8926affd14d";
-          const encodedMeta = encodeURIComponent(JSON.stringify(metadata));
-          const url = `https://vapi.ai?demo=true&assistantId=${botId}&metadata=${encodedMeta}`;
+          const sharekey = "ce828720-740a-44f3-b93a-420dbd3bffb2";
+          const url = `https://vapi.ai?demo=true&shareKey=${sharekey}&assistantId=${botId}`;
           window.location.href = url;
         }
       }).catch(error => console.error("Error sending to n8n:", error));
